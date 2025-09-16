@@ -1,0 +1,46 @@
+<section class="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-2xl mt-6" aria-labelledby="lembretes-title">
+  <header>
+    <h2 id="lembretes-title" class="text-2xl font-bold text-center mb-6 text-blue-700">Lembretes Agendados</h2>
+  </header>
+
+  <div *ngIf="reminders().length === 0" class="text-gray-500 text-center" role="status" aria-live="polite">
+    Nenhum lembrete agendado.
+  </div>
+
+  <ul class="space-y-4" role="list">
+    <li *ngFor="let reminder of reminders()" class="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition" role="listitem">
+      <article class="flex justify-between items-start" [attr.aria-labelledby]="'reminder-' + reminder.id">
+        <div>
+          <h3 [id]="'reminder-' + reminder.id" class="text-lg font-semibold text-blue-600">
+            {{ reminder.nome }} - {{ reminder.tipo === 'remedio' ? 'Remédio' : 'Consulta/Exame' }}
+          </h3>
+
+          <section *ngIf="reminder.tipo === 'remedio'" aria-label="Detalhes do Remédio" class="mt-1 text-gray-700">
+            <p><strong>Remédio:</strong> {{ reminder.remedio }}</p>
+            <p><strong>Dosagem:</strong> {{ reminder.dosagem }}</p>
+            <p><strong>Horário:</strong> {{ reminder.horario }}</p>
+            <p *ngIf="reminder.mensagem"><strong>Mensagem:</strong> {{ reminder.mensagem }}</p>
+          </section>
+
+          <section *ngIf="reminder.tipo === 'consulta'" aria-label="Detalhes da Consulta ou Exame" class="mt-1 text-gray-700">
+            <p><strong>Data:</strong> {{ reminder.data | date:'dd/MM/yyyy' }}</p>
+            <p><strong>Horário:</strong> {{ reminder.horario }}</p>
+            <p><strong>Local:</strong> {{ reminder.local }}</p>
+            <p *ngIf="reminder.mensagem"><strong>Mensagem:</strong> {{ reminder.mensagem }}</p>
+          </section>
+
+          <p class="mt-1 text-sm text-gray-500">
+            Responsável: {{ reminder.responsavelNumero }}
+          </p>
+        </div>
+
+        <button (click)="deletar(reminder.id)"
+                class="ml-4 bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-lg text-sm transition"
+                [attr.aria-label]="'Deletar lembrete de ' + reminder.nome"
+                [attr.aria-describedby]="'reminder-' + reminder.id">
+          Deletar
+        </button>
+      </article>
+    </li>
+  </ul>
+</section>

@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { ReminderFormComponent } from './components/reminder-form/reminder-form.component';
+import { ReminderListComponent } from './components/reminder-list/reminder-list.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [ReminderFormComponent, ReminderListComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'remind-me-frontend';
-}
+export class AppComponent {}

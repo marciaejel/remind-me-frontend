@@ -1,0 +1,33 @@
+.reminder-form__card {
+  @apply flex flex-col items-center p-6 sm:p-8 bg-white rounded-2xl shadow-lg max-w-md mx-auto;
+}
+
+.reminder-form__title {
+  @apply text-2xl sm:text-3xl font-bold text-blue-700 mb-6 text-center;
+}
+
+.reminder-form__fields {
+  @apply w-full flex flex-col space-y-4;
+
+  &__field {
+    @apply flex flex-col;
+
+    label {
+      @apply text-gray-700 text-base sm:text-lg mb-1;
+    }
+
+    input,
+    textarea {
+      @apply w-full p-3 sm:p-4 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-500 text-base sm:text-lg;
+    }
+
+    .text-red-500 {
+      @apply text-sm mt-1;
+    }
+  }
+}
+
+.reminder-form__submit {
+  @apply mt-6 w-full py-3 sm:py-4 bg-blue-600 text-white font-bold rounded-xl text-lg sm:text-xl 
+         hover:bg-blue-700 transition disabled:opacity-50;
+}

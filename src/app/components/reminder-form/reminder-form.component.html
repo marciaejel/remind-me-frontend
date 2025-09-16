@@ -1,0 +1,121 @@
+<main class="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-2xl" aria-labelledby="agendar-lembrete-title">
+  <header>
+    <h2 id="agendar-lembrete-title" class="text-2xl font-bold text-center mb-6 text-blue-700">
+      Agendar Lembrete
+    </h2>
+    <p id="form-description" class="sr-only">
+      Formulário para cadastrar lembretes de remédios, consultas ou exames.
+    </p>
+  </header>
+
+  <form (ngSubmit)="adicionar()" class="space-y-4" aria-describedby="form-description">
+    
+    <fieldset class="mb-4">
+      <legend class="block text-sm font-medium mb-1">Tipo de lembrete</legend>
+      <select [(ngModel)]="tipo" name="tipo"
+              class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+        <option value="remedio">Remédio</option>
+        <option value="consulta">Consulta/Exame</option>
+      </select>
+    </fieldset>
+
+    <section aria-label="Informações do paciente">
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Nome</label>
+        <input [(ngModel)]="nome" name="nome" required
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+        <p *ngIf="!nome.trim()" class="text-red-500 text-sm mt-1">Nome deve conter ao menos 3 caracteres.</p>
+      </fieldset>
+
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Telefone</label>
+        <input [(ngModel)]="numero" name="numero" required
+               placeholder="(11) 98765-4321"
+               appPhoneMask
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+        <p *ngIf="numero && !validarTelefone(numero)" class="text-red-500 text-sm mt-1">
+          Telefone inválido. Use o formato <strong>(DD) 9XXXX-XXXX</strong>.
+        </p>
+      </fieldset>
+
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Telefone do Responsável</label>
+        <input [(ngModel)]="responsavelNumero" name="responsavelNumero" required
+               placeholder="(11) 91234-5678"
+               appPhoneMask
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+        <p *ngIf="responsavelNumero && !validarTelefone(responsavelNumero)" class="text-red-500 text-sm mt-1">
+          Telefone inválido. Use o formato <strong>(DD) 9XXXX-XXXX</strong>.
+        </p>
+      </fieldset>
+    </section>
+
+    <article *ngIf="tipo === 'remedio'" aria-labelledby="remedio-title">
+      <header>
+        <h3 id="remedio-title" class="sr-only">Detalhes do Remédio</h3>
+      </header>
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Remédio</label>
+        <input [(ngModel)]="remedio" name="remedio" required
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      </fieldset>
+
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Dosagem</label>
+        <input [(ngModel)]="dosagem" name="dosagem" required
+               placeholder="Ex: 1 comprimido a cada 8h"
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      </fieldset>
+
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Mensagem</label>
+        <textarea [(ngModel)]="mensagem" name="mensagem" rows="2"
+                  placeholder="Ex: Não esqueça de tomar seu remédio!"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+      </fieldset>
+
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Horário</label>
+        <input type="time" [(ngModel)]="horario" name="horario" required
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      </fieldset>
+    </article>
+
+    <article *ngIf="tipo === 'consulta'" aria-labelledby="consulta-title">
+      <header>
+        <h3 id="consulta-title" class="sr-only">Detalhes da Consulta/Exame</h3>
+      </header>
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Data</label>
+        <input type="date" [(ngModel)]="dataConsulta" name="dataConsulta" required
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      </fieldset>
+
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Horário</label>
+        <input type="time" [(ngModel)]="horarioConsulta" name="horarioConsulta" required
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      </fieldset>
+
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Local</label>
+        <input [(ngModel)]="localConsulta" name="localConsulta" required
+               class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+      </fieldset>
+
+      <fieldset>
+        <label class="block text-sm font-medium mb-1">Mensagem</label>
+        <textarea [(ngModel)]="mensagemConsulta" name="mensagemConsulta" rows="2"
+                  placeholder="Ex: Consulta com Dr. João"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"></textarea>
+      </fieldset>
+    </article>
+
+
+    <button type="submit"
+            [disabled]="!formValido()"
+            class="w-full py-3 px-4 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition">
+      Agendar
+    </button>
+  </form>
+</main>

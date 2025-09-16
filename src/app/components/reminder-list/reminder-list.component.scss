@@ -1,0 +1,7 @@
+.reminder-item {
+  @apply flex justify-between items-center p-4 mb-3 bg-white rounded-xl shadow;
+
+  button {
+    @apply text-red-500 font-bold hover:text-red-700 transition;
+  }
+}
